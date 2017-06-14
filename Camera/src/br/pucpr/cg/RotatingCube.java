@@ -12,6 +12,7 @@ public class RotatingCube implements Scene {
     private Camera camera = new Camera();
     private Mesh mesh;
     private float angle;
+    private float angleX;
 
     @Override
     public void init() {
@@ -62,6 +63,13 @@ public class RotatingCube implements Scene {
         if (keys.isDown(GLFW_KEY_D)) {
             angle -= Math.toRadians(180) * secs;
         }
+        if (keys.isDown(GLFW_KEY_W)) {
+            angleX -= Math.toRadians(180) * secs;
+        }
+
+        if(keys.isDown(GLFW_KEY_S)){
+            angleX += Math.toRadians(180) * secs;
+        }
     }
 
     @Override
@@ -74,7 +82,7 @@ public class RotatingCube implements Scene {
                 .setUniform("uView",	camera.getViewMatrix())
                 .unbind();
 
-        mesh.setUniform("uWorld", new Matrix4f().rotateY(angle));
+        mesh.setUniform("uWorld", new Matrix4f().rotateY(angle).rotateX(angleX));
         mesh.draw();
     }
 
